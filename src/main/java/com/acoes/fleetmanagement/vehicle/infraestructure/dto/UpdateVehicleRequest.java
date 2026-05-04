@@ -6,12 +6,15 @@ import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
 
-import static com.acoes.fleetmanagement.shared.constants.ErrorMenssagesConstants.*;
+import static com.acoes.fleetmanagement.shared.constants.ExceptionMessageConstants.*;
 import static com.acoes.fleetmanagement.shared.constants.ValidationConstants.*;
 
 public record UpdateVehicleRequest(
 
         @NotBlank(message = NUMBER_PLATE_REQUIRED)
+        @Pattern(
+                regexp = REGEX_VALIDATION_PLATES,
+                message = PLATE_NUMBER_NOT_VALID_MESSAGE)
         String plateNumber,
 
         @NotBlank(message = VIN_IS_REQUIRED)

@@ -10,7 +10,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 
-import static com.acoes.fleetmanagement.shared.constants.ErrorMenssagesConstants.VIN_NOT_VALID_MESSAGE;
+import static com.acoes.fleetmanagement.shared.constants.ExceptionMessageConstants.VIN_NOT_VALID_MESSAGE;
 import static com.acoes.fleetmanagement.shared.constants.ValidationConstants.*;
 
 @Getter

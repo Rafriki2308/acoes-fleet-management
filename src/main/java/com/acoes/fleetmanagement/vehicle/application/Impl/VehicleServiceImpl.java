@@ -4,6 +4,7 @@ import com.acoes.fleetmanagement.garage.domain.GarageJpaEntity;
 import com.acoes.fleetmanagement.garage.domain.repository.GarageJpaRepository;
 import com.acoes.fleetmanagement.shared.exception.DuplicateResourceException;
 import com.acoes.fleetmanagement.shared.exception.ResourceNotFoundException;
+import com.acoes.fleetmanagement.shared.validation.PlateNumberUtils;
 import com.acoes.fleetmanagement.vehicle.application.VehicleService;
 import com.acoes.fleetmanagement.vehicle.application.mapper.VehicleMapper;
 import com.acoes.fleetmanagement.vehicle.domain.VehicleJpaEntity;
@@ -17,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static com.acoes.fleetmanagement.shared.constants.ExceptionMessageConstants.VEHICLE_NOT_FOUND_BY_ID;
 
 @Service
 @AllArgsConstructor
@@ -36,7 +39,8 @@ public class VehicleServiceImpl implements VehicleService {
     @Transactional
     public VehicleResponse create(CreateVehicleRequest request) {
 
-        validatePlateNumberUniqueness(request.plateNumber(), null);
+        String normalizedPlate = PlateNumberUtils.normalize(request.plateNumber());
+        validatePlateNumberUniqueness(normalizedPlate, null);
         validateVinUniqueness(request.vin(), null);
 
         VehicleJpaEntity vehicle = vehicleMapper.toEntity(request);
@@ -67,7 +71,8 @@ public class VehicleServiceImpl implements VehicleService {
 
         VehicleJpaEntity vehicle = findActiveVehicleById(id);
 
-        validatePlateNumberUniqueness(request.plateNumber(), vehicle);
+        String normalizedPlate = PlateNumberUtils.normalize(request.plateNumber());
+        validatePlateNumberUniqueness(normalizedPlate, vehicle);
         validateVinUniqueness(request.vin(), vehicle);
 
         // MapStruct actualiza los campos simples
@@ -92,7 +97,7 @@ public class VehicleServiceImpl implements VehicleService {
     private VehicleJpaEntity findActiveVehicleById(Long id) {
         return vehicleRepository.findById(id)
                 .filter(VehicleJpaEntity::isActive)
-                .orElseThrow(() -> new ResourceNotFoundException("Vehicle not found"));
+                .orElseThrow(() -> new ResourceNotFoundException(VEHICLE_NOT_FOUND_BY_ID + id));
     }
 
     private void assignGarage(VehicleJpaEntity vehicle, Long garageId) {
