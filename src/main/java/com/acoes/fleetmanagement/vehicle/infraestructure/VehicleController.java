@@ -2,6 +2,7 @@ package com.acoes.fleetmanagement.vehicle.infraestructure;
 
 import com.acoes.fleetmanagement.vehicle.application.VehicleService;
 import com.acoes.fleetmanagement.vehicle.infraestructure.dto.CreateVehicleRequest;
+import com.acoes.fleetmanagement.vehicle.infraestructure.dto.PatchVehicleRequest;
 import com.acoes.fleetmanagement.vehicle.infraestructure.dto.UpdateVehicleRequest;
 import com.acoes.fleetmanagement.vehicle.infraestructure.dto.VehicleResponse;
 import jakarta.validation.Valid;
@@ -48,7 +49,15 @@ public class VehicleController {
         return vehicleService.update(id, request);
     }
 
-    @PatchMapping(DEACTIVATE_VEHICLE_BY_ID)
+    @PatchMapping(BY_ID)
+    public VehicleResponse patch(
+            @PathVariable Long id,
+            @RequestBody PatchVehicleRequest request
+    ) {
+        return vehicleService.patch(id, request);
+    }
+
+    @PatchMapping(DEACTIVATE_BY_ID)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deactivate(@PathVariable Long id) {
         vehicleService.deactivate(id);

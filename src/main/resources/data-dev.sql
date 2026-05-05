@@ -18,7 +18,6 @@
 -- =========================================================
 
 INSERT INTO garages (
-    id,
     name,
     address_street,
     address_city,
@@ -32,8 +31,7 @@ INSERT INTO garages (
     active
 ) VALUES
 -- Taller interno principal
-(1,
- 'Taller Central ACOES',
+( 'Taller Central ACOES',
  'Calle Principal 123',
  'Madrid',
  'Madrid',
@@ -47,8 +45,7 @@ INSERT INTO garages (
 ),
 
 -- Taller externo colaborador
-(2,
- 'Taller Mecánica Rápida',
+( 'Taller Mecánica Rápida',
  'Avenida del Motor 45',
  'Madrid',
  'Madrid',
@@ -74,7 +71,6 @@ INSERT INTO garages (
 -- =========================================================
 
 INSERT INTO vehicles (
-    id,
     plate_number,
     vin,
     brand,
@@ -92,7 +88,6 @@ INSERT INTO vehicles (
 
 -- Vehículo operativo (circulando)
 (
-    1,
     '1234ABC',
     '1HGCM82633A123456',
     'Toyota',
@@ -110,7 +105,6 @@ INSERT INTO vehicles (
 
 -- Vehículo en reparación (en taller 1)
 (
-    2,
     '5678DEF',
     'WVWZZZ1JZXW000001',
     'Ford',
@@ -128,8 +122,7 @@ INSERT INTO vehicles (
 
 -- Vehículo fuera de servicio
 (
-    3,
-    '9012GHI',
+ '9012GHI',
     'JH4KA4650MC000002',
     'Nissan',
     'Navara',

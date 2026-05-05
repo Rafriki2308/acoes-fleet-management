@@ -4,22 +4,24 @@ import com.acoes.fleetmanagement.garage.domain.GarageJpaEntity;
 import com.acoes.fleetmanagement.garage.domain.repository.GarageJpaRepository;
 import com.acoes.fleetmanagement.shared.exception.DuplicateResourceException;
 import com.acoes.fleetmanagement.shared.exception.ResourceNotFoundException;
-import com.acoes.fleetmanagement.shared.validation.PlateNumberUtils;
+import com.acoes.fleetmanagement.shared.validation.VehicleNormalizationUtils;
 import com.acoes.fleetmanagement.vehicle.application.VehicleService;
 import com.acoes.fleetmanagement.vehicle.application.mapper.VehicleMapper;
 import com.acoes.fleetmanagement.vehicle.domain.VehicleJpaEntity;
 import com.acoes.fleetmanagement.vehicle.domain.repository.VehicleJpaRepository;
 import com.acoes.fleetmanagement.vehicle.infraestructure.dto.CreateVehicleRequest;
+import com.acoes.fleetmanagement.vehicle.infraestructure.dto.PatchVehicleRequest;
 import com.acoes.fleetmanagement.vehicle.infraestructure.dto.UpdateVehicleRequest;
 import com.acoes.fleetmanagement.vehicle.infraestructure.dto.VehicleResponse;
-import jakarta.transaction.Transactional;
+import com.acoes.fleetmanagement.shared.validation.NormalizatedTextUtil;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.acoes.fleetmanagement.shared.constants.ExceptionMessageConstants.VEHICLE_NOT_FOUND_BY_ID;
+import static com.acoes.fleetmanagement.shared.constants.ExceptionMessageConstans.*;
 
 @Service
 @AllArgsConstructor
@@ -39,18 +41,20 @@ public class VehicleServiceImpl implements VehicleService {
     @Transactional
     public VehicleResponse create(CreateVehicleRequest request) {
 
-        String normalizedPlate = PlateNumberUtils.normalize(request.plateNumber());
-        validatePlateNumberUniqueness(normalizedPlate, null);
+        validatePlateNumberUniqueness(request.plateNumber(), null);
         validateVinUniqueness(request.vin(), null);
 
         VehicleJpaEntity vehicle = vehicleMapper.toEntity(request);
+
         assignGarage(vehicle, request.currentGarageId());
+
+        normalizeVehicleFields(vehicle);
 
         return vehicleMapper.toResponse(vehicleRepository.save(vehicle));
     }
 
     @Override
-    @Transactional()
+    @Transactional(readOnly = true)
     public List<VehicleResponse> findAll() {
         return vehicleRepository.findByActiveTrue()
                 .stream()
@@ -59,7 +63,7 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
-    @Transactional()
+    @Transactional(readOnly = true)
     public VehicleResponse findById(Long id) {
 
         return vehicleMapper.toResponse(findActiveVehicleById(id));
@@ -71,14 +75,14 @@ public class VehicleServiceImpl implements VehicleService {
 
         VehicleJpaEntity vehicle = findActiveVehicleById(id);
 
-        String normalizedPlate = PlateNumberUtils.normalize(request.plateNumber());
-        validatePlateNumberUniqueness(normalizedPlate, vehicle);
+        validatePlateNumberUniqueness(request.plateNumber(), vehicle);
         validateVinUniqueness(request.vin(), vehicle);
 
         // MapStruct actualiza los campos simples
         vehicleMapper.updateEntityFromRequest(request, vehicle);
 
-        // Asignación manual de relación
+        normalizeVehicleFields(vehicle);
+
         assignGarage(vehicle, request.currentGarageId());
 
         return vehicleMapper.toResponse(vehicleRepository.save(vehicle));
@@ -86,12 +90,32 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     @Transactional
+    public VehicleResponse patch(Long id, PatchVehicleRequest request) {
+
+        VehicleJpaEntity vehicle = findActiveVehicleById(id);
+
+        updatePlateNumberIfPresent(vehicle, request.plateNumber());
+        updateVinIfPresent(vehicle, request.vin());
+
+        vehicleMapper.patchEntityFromRequest(request, vehicle);
+
+        normalizeVehicleFields(vehicle);
+
+        return vehicleMapper.toResponse(vehicle);
+    }
+
+    @Override
+    @Transactional
     public void deactivate(Long id) {
         VehicleJpaEntity vehicle = findActiveVehicleById(id);
 
-        vehicle.setActive(false);
+        deactivateVehicle(vehicle);
 
-        vehicleRepository.save(vehicle);
+    }
+
+    private void deactivateVehicle(VehicleJpaEntity vehicle) {
+        // Managed entity → Hibernate will persist change automatically
+        vehicle.setActive(false);
     }
 
     private VehicleJpaEntity findActiveVehicleById(Long id) {
@@ -111,19 +135,28 @@ public class VehicleServiceImpl implements VehicleService {
         }
 
         return garageRepository.findById(garageId)
-                .orElseThrow(() -> new ResourceNotFoundException("Garage not found"));
+                .orElseThrow(() -> new ResourceNotFoundException(GARAGE_NOT_FOUND_BY_ID + garageId));
+    }
+
+    private void normalizeVehicleFields(VehicleJpaEntity vehicle) {
+        vehicle.setPlateNumber(VehicleNormalizationUtils.normalizePlateNumber(vehicle.getPlateNumber()));
+        vehicle.setVin(VehicleNormalizationUtils.normalizeVin(vehicle.getVin()));
+        vehicle.setBrand(NormalizatedTextUtil.normalizeUpper(vehicle.getBrand()));
+        vehicle.setModel(NormalizatedTextUtil.normalizeUpper(vehicle.getModel()));
+        vehicle.setColor(NormalizatedTextUtil.normalizeUpper(vehicle.getColor()));
     }
 
     private void validatePlateNumberUniqueness(String plateNumber, VehicleJpaEntity currentVehicle) {
         if (plateNumber == null) {
             return;
         }
+        String normalizePlate = VehicleNormalizationUtils.normalizePlateNumber(plateNumber);
 
         boolean isSameVehicle = currentVehicle != null
-                && plateNumber.equals(currentVehicle.getPlateNumber());
+                && normalizePlate.equals(currentVehicle.getPlateNumber());
 
-        if (!isSameVehicle && vehicleRepository.existsByPlateNumber(plateNumber)) {
-            throw new DuplicateResourceException("Plate number already exists");
+        if (!isSameVehicle && vehicleRepository.existsByPlateNumber(normalizePlate)) {
+            throw new DuplicateResourceException(PLATE_NUMBER_ALREADY_EXIST + plateNumber);
         }
     }
 
@@ -133,11 +166,37 @@ public class VehicleServiceImpl implements VehicleService {
             return;
         }
 
-        boolean isSameVehicle = currentVehicle != null
-                && vin.equals(currentVehicle.getVin());
+        String normalizeVin = VehicleNormalizationUtils.normalizeVin(vin);
 
-        if (!isSameVehicle && vehicleRepository.existsByVin(vin)) {
-            throw new DuplicateResourceException("VIN already exists");
+        boolean isSameVehicle = currentVehicle != null
+                && normalizeVin.equals(currentVehicle.getVin());
+
+        if (!isSameVehicle && vehicleRepository.existsByVin(normalizeVin)) {
+            throw new DuplicateResourceException(VIN_ALREADY_EXIST + vin);
         }
+    }
+
+    private void updatePlateNumberIfPresent(VehicleJpaEntity vehicle, String plateNumber) {
+        if (plateNumber == null) {
+            return;
+        }
+
+        String normalizedPlate = VehicleNormalizationUtils.normalizePlateNumber(plateNumber);
+
+        validatePlateNumberUniqueness(normalizedPlate, vehicle);
+
+        vehicle.setPlateNumber(normalizedPlate);
+    }
+
+    private void updateVinIfPresent(VehicleJpaEntity vehicle, String vin) {
+        if (vin == null) {
+            return;
+        }
+
+        String normalizedVin = VehicleNormalizationUtils.normalizeVin(vin);
+
+        validateVinUniqueness(normalizedVin, vehicle);
+
+        vehicle.setVin(normalizedVin);
     }
 }

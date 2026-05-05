@@ -6,7 +6,7 @@ import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
 
-import static com.acoes.fleetmanagement.shared.constants.ExceptionMessageConstants.*;
+import static com.acoes.fleetmanagement.shared.constants.ValidationMessageConstants.*;
 import static com.acoes.fleetmanagement.shared.constants.ValidationConstants.*;
 
 public record UpdateVehicleRequest(

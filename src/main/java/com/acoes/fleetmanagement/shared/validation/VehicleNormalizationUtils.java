@@ -1,11 +1,11 @@
 package com.acoes.fleetmanagement.shared.validation;
 
-public final class PlateNumberUtils {
+import lombok.NoArgsConstructor;
 
-    private PlateNumberUtils() {
-    }
+@NoArgsConstructor
+public final class VehicleNormalizationUtils {
 
-    public static String normalize(String plateNumber) {
+    public static String normalizePlateNumber(String plateNumber) {
 
         if (plateNumber == null) {
             return null;
@@ -16,5 +16,16 @@ public final class PlateNumberUtils {
                 .toUpperCase()         // mayúsculas
                 .replaceAll("\\s+", "") // elimina TODOS los espacios
                 .replace("-", "");     // elimina guiones (opcional)
+    }
+
+    public static String normalizeVin(String vin) {
+        if (vin == null) {
+            return null;
+        }
+
+        return vin
+                .trim()
+                .toUpperCase()
+                .replaceAll("\\s+", "");
     }
 }
