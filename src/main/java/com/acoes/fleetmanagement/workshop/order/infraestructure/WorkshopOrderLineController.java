@@ -2,6 +2,7 @@ package com.acoes.fleetmanagement.workshop.order.infraestructure;
 
 import com.acoes.fleetmanagement.workshop.order.application.WorkshopOrderLineService;
 import com.acoes.fleetmanagement.workshop.order.infraestructure.dto.CreateWorkshopOrderLineRequest;
+import com.acoes.fleetmanagement.workshop.order.infraestructure.dto.PatchWorkshopOrderLineRequest;
 import com.acoes.fleetmanagement.workshop.order.infraestructure.dto.WorkshopOrderLineResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +40,27 @@ public class WorkshopOrderLineController {
             @PathVariable String orderNumber
     ) {
         return workshopOrderLineService.findByWorkshopOrderNumber(orderNumber);
+    }
+
+    @PatchMapping(BY_ID)
+    public WorkshopOrderLineResponse patch(
+            @PathVariable Long id,
+            @Valid @RequestBody PatchWorkshopOrderLineRequest request
+    ) {
+        return workshopOrderLineService.patch(id, request);
+    }
+
+    @PatchMapping(PATCH_LINE_BY_WORKSHOP_ORDER_NUMBER)
+    public WorkshopOrderLineResponse patchByOrderNumberAndLineNumber(
+            @PathVariable String orderNumber,
+            @PathVariable Integer lineNumber,
+            @RequestBody PatchWorkshopOrderLineRequest request
+    ) {
+        return workshopOrderLineService.patchByOrderNumberAndLineNumber(
+                orderNumber,
+                lineNumber,
+                request
+        );
     }
 
     @PatchMapping(DEACTIVATE_BY_ID)

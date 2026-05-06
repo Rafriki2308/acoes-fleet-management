@@ -27,5 +27,6 @@ public final class EndpointConstants {
     public final static String MAIN_WORKSHOP_ORDER_LINE = "/api/workshop-order-lines";
     public final static String FIND_LINES_BY_WORKSHOP_ORDER_ID = "/workshop-order/{workshopOrderId}";
     public final static String FIND_LINES_BY_WORKSHOP_ORDER_NUMBER = "/workshop-order-number/{orderNumber}";
+    public final static String PATCH_LINE_BY_WORKSHOP_ORDER_NUMBER = "/order/{orderNumber}/line/{lineNumber}";
 
 }

@@ -17,6 +17,10 @@ public class ExceptionMessageConstans {
     public static final String WORKSHOP_NOT_FOUND_BY_NUMBER = "Workshop order not found with number: ";
 
     //WORKSHOP_ORDER_LINE
+    public static final String WORKSHOP_ORDER_LINE_NOT_FOUND_BY_ID = "Workshop order line not found with id: ";
     public static final String WORKSHOP_ORDER_LINE_NUMBER_ALREADY_EXISTS = "Line number already exists " +
             "for this workshop order";
+    public static final String WORKSHOP_ORDER_LINE_NOT_FOUND_BY_ORDER_NUMBER = "Workshop order line not " +
+            "found for order number: ";
+    public static final String LINE_NUMBER = " and line number: ";
 }

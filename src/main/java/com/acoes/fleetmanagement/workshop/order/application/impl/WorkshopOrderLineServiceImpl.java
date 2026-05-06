@@ -9,6 +9,7 @@ import com.acoes.fleetmanagement.workshop.order.application.repository.WorkshopO
 import com.acoes.fleetmanagement.workshop.order.domain.WorkshopOrderJpaEntity;
 import com.acoes.fleetmanagement.workshop.order.domain.WorkshopOrderLineJpaEntity;
 import com.acoes.fleetmanagement.workshop.order.infraestructure.dto.CreateWorkshopOrderLineRequest;
+import com.acoes.fleetmanagement.workshop.order.infraestructure.dto.PatchWorkshopOrderLineRequest;
 import com.acoes.fleetmanagement.workshop.order.infraestructure.dto.WorkshopOrderLineResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.acoes.fleetmanagement.shared.constants.ExceptionMessageConstans.WORKSHOP_NOT_FOUND_BY_NUMBER;
-import static com.acoes.fleetmanagement.shared.constants.ExceptionMessageConstans.WORKSHOP_ORDER_LINE_NUMBER_ALREADY_EXISTS;
+import static com.acoes.fleetmanagement.shared.constants.ExceptionMessageConstans.*;
 
 
 @Service
@@ -84,6 +84,40 @@ public class WorkshopOrderLineServiceImpl implements WorkshopOrderLineService {
 
     @Override
     @Transactional
+    public WorkshopOrderLineResponse patch(Long id, PatchWorkshopOrderLineRequest request) {
+
+        WorkshopOrderLineJpaEntity entity = findActiveLineById(id);
+
+        if (request.lineNumber() != null) {
+            validateLineNumberUniquenessForPatch(
+                    entity.getWorkshopOrder().getId(),
+                    request.lineNumber(),
+                    entity
+            );
+        }
+
+        workshopOrderLineMapper.patchEntityFromRequest(request, entity);
+
+        return workshopOrderLineMapper.toResponse(entity);
+    }
+
+    @Override
+    @Transactional
+    public WorkshopOrderLineResponse patchByOrderNumberAndLineNumber(
+            String orderNumber,
+            Integer lineNumber,
+            PatchWorkshopOrderLineRequest request
+    ) {
+        WorkshopOrderLineJpaEntity entity =
+                findActiveLineByOrderNumberAndLineNumber(orderNumber, lineNumber);
+
+        workshopOrderLineMapper.patchEntityFromRequest(request, entity);
+
+        return workshopOrderLineMapper.toResponse(entity);
+    }
+
+    @Override
+    @Transactional
     public void deactivate(Long id) {
 
         WorkshopOrderLineJpaEntity entity = findActiveLineById(id);
@@ -105,7 +139,7 @@ public class WorkshopOrderLineServiceImpl implements WorkshopOrderLineService {
                 .filter(WorkshopOrderLineJpaEntity::isActive)
                 .orElseThrow(() ->
                         new ResourceNotFoundException(
-                                "Workshop order line not found with id: " + id
+                                WORKSHOP_ORDER_LINE_NOT_FOUND_BY_ID + id
                         )
                 );
     }
@@ -124,4 +158,35 @@ public class WorkshopOrderLineServiceImpl implements WorkshopOrderLineService {
             throw new DuplicateResourceException(WORKSHOP_ORDER_LINE_NUMBER_ALREADY_EXISTS);
         }
     }
+
+    private void validateLineNumberUniquenessForPatch(
+            Long workshopOrderId,
+            Integer newLineNumber,
+            WorkshopOrderLineJpaEntity currentLine
+    ) {
+        boolean isSameLineNumber = newLineNumber.equals(currentLine.getLineNumber());
+
+        if (!isSameLineNumber &&
+                workshopOrderLineRepository.existsByWorkshopOrderIdAndLineNumber(
+                        workshopOrderId,
+                        newLineNumber
+                )) {
+            throw new DuplicateResourceException(
+                    WORKSHOP_ORDER_LINE_NUMBER_ALREADY_EXISTS
+            );
+        }
+    }
+
+    private WorkshopOrderLineJpaEntity findActiveLineByOrderNumberAndLineNumber(
+            String orderNumber,
+            Integer lineNumber
+    ) {
+        return workshopOrderLineRepository
+                .findByWorkshopOrderOrderNumberAndLineNumberAndActiveTrue(orderNumber, lineNumber)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        WORKSHOP_ORDER_LINE_NOT_FOUND_BY_ORDER_NUMBER
+                                + orderNumber + LINE_NUMBER + lineNumber
+                ));
+    }
+
 }
