@@ -4,20 +4,17 @@ import com.acoes.fleetmanagement.garage.domain.GarageJpaEntity;
 import com.acoes.fleetmanagement.garage.domain.repository.GarageJpaRepository;
 import com.acoes.fleetmanagement.shared.exception.DuplicateResourceException;
 import com.acoes.fleetmanagement.shared.exception.ResourceNotFoundException;
+import com.acoes.fleetmanagement.shared.validation.NormalizatedTextUtil;
 import com.acoes.fleetmanagement.shared.validation.VehicleNormalizationUtils;
 import com.acoes.fleetmanagement.vehicle.application.VehicleService;
 import com.acoes.fleetmanagement.vehicle.application.mapper.VehicleMapper;
 import com.acoes.fleetmanagement.vehicle.domain.VehicleJpaEntity;
 import com.acoes.fleetmanagement.vehicle.domain.repository.VehicleJpaRepository;
-import com.acoes.fleetmanagement.vehicle.infraestructure.dto.CreateVehicleRequest;
-import com.acoes.fleetmanagement.vehicle.infraestructure.dto.PatchVehicleRequest;
-import com.acoes.fleetmanagement.vehicle.infraestructure.dto.UpdateVehicleRequest;
-import com.acoes.fleetmanagement.vehicle.infraestructure.dto.VehicleResponse;
-import com.acoes.fleetmanagement.shared.validation.NormalizatedTextUtil;
-import org.springframework.transaction.annotation.Transactional;
+import com.acoes.fleetmanagement.vehicle.infraestructure.dto.*;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -28,13 +25,13 @@ import static com.acoes.fleetmanagement.shared.constants.ExceptionMessageConstan
 public class VehicleServiceImpl implements VehicleService {
 
     @Autowired
-    private  VehicleJpaRepository vehicleRepository;
+    private VehicleJpaRepository vehicleRepository;
 
     @Autowired
-    private  GarageJpaRepository garageRepository;
+    private GarageJpaRepository garageRepository;
 
     @Autowired
-    private  VehicleMapper vehicleMapper;
+    private VehicleMapper vehicleMapper;
 
 
     @Override
@@ -106,6 +103,17 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     @Transactional
+    public VehicleResponse assignGarage(Long vehicleId, AssignGarageRequest request) {
+
+        VehicleJpaEntity vehicle = findActiveVehicleById(vehicleId);
+
+        assignGarageToVehicle(vehicle, request.garageId());
+
+        return vehicleMapper.toResponse(vehicle);
+    }
+
+    @Override
+    @Transactional
     public void deactivate(Long id) {
         VehicleJpaEntity vehicle = findActiveVehicleById(id);
 
@@ -136,6 +144,30 @@ public class VehicleServiceImpl implements VehicleService {
 
         return garageRepository.findById(garageId)
                 .orElseThrow(() -> new ResourceNotFoundException(GARAGE_NOT_FOUND_BY_ID + garageId));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public VehicleResponse findByPlateNumber(String plateNumber) {
+
+        String normalizedPlateNumber = VehicleNormalizationUtils.normalizePlateNumber(plateNumber);
+
+        VehicleJpaEntity vehicle = vehicleRepository.findByPlateNumberAndActiveTrue(normalizedPlateNumber)
+                .orElseThrow(() -> new ResourceNotFoundException(VEHICLE_NOT_FOUND_BY_PLATE_NUMBER + normalizedPlateNumber));
+
+        return vehicleMapper.toResponse(vehicle);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public VehicleResponse findByVin(String vin) {
+
+        String normalizedVin = VehicleNormalizationUtils.normalizeVin(vin);
+
+        VehicleJpaEntity vehicle = vehicleRepository.findByVinAndActiveTrue(normalizedVin)
+                .orElseThrow(() -> new ResourceNotFoundException(VEHICLE_NOT_FOUND_BY_VIN + normalizedVin));
+
+        return vehicleMapper.toResponse(vehicle);
     }
 
     private void normalizeVehicleFields(VehicleJpaEntity vehicle) {
@@ -198,5 +230,9 @@ public class VehicleServiceImpl implements VehicleService {
         validateVinUniqueness(normalizedVin, vehicle);
 
         vehicle.setVin(normalizedVin);
+    }
+
+    private void assignGarageToVehicle(VehicleJpaEntity vehicle, Long garageId) {
+        vehicle.setCurrentGarage(resolveGarage(garageId));
     }
 }

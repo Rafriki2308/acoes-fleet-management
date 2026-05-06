@@ -1,0 +1,468 @@
+{
+  "info": {
+    "_postman_id": "cf7257a6-c55e-4370-a2aa-3e44dd077780",
+    "name": "Proyecto ACOES",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "34663101"
+  },
+  "item": [
+    {
+      "name": "Vehicles",
+      "item": [
+        {
+          "name": "Add Vehicle",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"plateNumber\": \"PAB1234\",\r\n  \"vin\": \"1HGCM82633A123456\",\r\n  \"brand\": \"Toyota\",\r\n  \"model\": \"Corolla\",\r\n  \"color\": \"Blanco\",\r\n  \"type\": \"CAR\",\r\n  \"status\": \"OPERATIONAL\",\r\n  \"currentMileage\": 125000,\r\n  \"officialRegistrationDate\": \"2018-05-12\",\r\n  \"insuranceExpirationDate\": \"2027-05-12\",\r\n  \"currentGarageId\": 1,\r\n  \"notes\": \"Vehículo de prueba\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{localhostAcoes}}/api/vehicles",
+              "host": [
+                "{{localhostAcoes}}"
+              ],
+              "path": [
+                "api",
+                "vehicles"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Vehicle By Id",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{localhostAcoes}}/api/vehicles/:id",
+              "host": [
+                "{{localhostAcoes}}"
+              ],
+              "path": [
+                "api",
+                "vehicles",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Vehicles",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{localhostAcoes}}/api/vehicles",
+              "host": [
+                "{{localhostAcoes}}"
+              ],
+              "path": [
+                "api",
+                "vehicles"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Vehicle By Plate Number",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{localhostAcoes}}/api/vehicles/plate/:plateNumber",
+              "host": [
+                "{{localhostAcoes}}"
+              ],
+              "path": [
+                "api",
+                "vehicles",
+                "plate",
+                ":plateNumber"
+              ],
+              "variable": [
+                {
+                  "key": "plateNumber",
+                  "value": "1234ABC"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Vehicle By Id",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"plateNumber\": \"PAB1234\",\r\n    \"vin\": \"1HGCM82633A123456\",\r\n    \"brand\": \"Toyota\",\r\n    \"model\": \"Corolla\",\r\n    \"color\": \"Blanco\",\r\n    \"type\": \"CAR\",\r\n    \"status\": \"OPERATIONAL\",\r\n    \"currentMileage\": 125000,\r\n    \"officialRegistrationDate\": \"2018-05-12\",\r\n    \"insuranceExpirationDate\": \"2027-05-12\",\r\n    \"currentGarageId\": 1,\r\n    \"notes\": \"Vehículo de prueba\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{localhostAcoes}}/api/vehicles/:id",
+              "host": [
+                "{{localhostAcoes}}"
+              ],
+              "path": [
+                "api",
+                "vehicles",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Deactivate Vehicle By Id",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{localhostAcoes}}/api/vehicles/:id/deactivate",
+              "host": [
+                "{{localhostAcoes}}"
+              ],
+              "path": [
+                "api",
+                "vehicles",
+                ":id",
+                "deactivate"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Patch Vehicle By Id",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"plateNumber\": \"car 1234\",\r\n    \"color\": \"Rojo\",\r\n    \"notes\": \"Cambio de color mediante patch\",\r\n    \"vin\": \"wvwzzz1jzxw000006\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{localhostAcoes}}/api/vehicles/:id",
+              "host": [
+                "{{localhostAcoes}}"
+              ],
+              "path": [
+                "api",
+                "vehicles",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "2"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Assign Garage To Vehicle",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"garageId\": 2\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{localhostAcoes}}/api/vehicles/:id/assign-garage",
+              "host": [
+                "{{localhostAcoes}}"
+              ],
+              "path": [
+                "api",
+                "vehicles",
+                ":id",
+                "assign-garage"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Vehicle By VIN",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{localhostAcoes}}/api/vehicles/vin/:vin",
+              "host": [
+                "{{localhostAcoes}}"
+              ],
+              "path": [
+                "api",
+                "vehicles",
+                "vin",
+                ":vin"
+              ],
+              "variable": [
+                {
+                  "key": "vin",
+                  "value": "1HGCM82633A123456"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Garage",
+      "item": [
+        {
+          "name": "Add Garage",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Taller Central\",\r\n    \"street\": \"Av. Principal 123\",\r\n    \"city\": \"Tegucigalpa\",\r\n    \"province\": \"Francisco Morazán\",\r\n    \"postalCode\": \"11101\",\r\n    \"country\": \"Honduras\",\r\n    \"contactName\": \"Juan Pérez\",\r\n    \"phone\": \"99999999\",\r\n    \"email\": \"taller@acoes.org\",\r\n    \"notes\": \"Taller principal\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{localhostAcoes}}/api/garages",
+              "host": [
+                "{{localhostAcoes}}"
+              ],
+              "path": [
+                "api",
+                "garages"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Garages",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{localhostAcoes}}/api/garages",
+              "host": [
+                "{{localhostAcoes}}"
+              ],
+              "path": [
+                "api",
+                "garages"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Garage By Id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{localhostAcoes}}/api/garages/:id",
+              "host": [
+                "{{localhostAcoes}}"
+              ],
+              "path": [
+                "api",
+                "garages",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Garage By Id",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Taller Norte\",\r\n    \"street\": \"Calle 2\",\r\n    \"city\": \"La Ceiba\",\r\n    \"province\": \"Atlántida\",\r\n    \"postalCode\": \"31101\",\r\n    \"country\": \"Honduras\",\r\n    \"contactName\": \"Carlos López\",\r\n    \"phone\": \"77777777\",\r\n    \"email\": \"norte@acoes.org\",\r\n    \"notes\": \"Nuevo taller\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{localhostAcoes}}/api/garages/:id",
+              "host": [
+                "{{localhostAcoes}}"
+              ],
+              "path": [
+                "api",
+                "garages",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Deactivate Garage By Id",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{localhostAcoes}}/api/garages/:id/deactivate",
+              "host": [
+                "{{localhostAcoes}}"
+              ],
+              "path": [
+                "api",
+                "garages",
+                ":id",
+                "deactivate"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Patch Garage By Id",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"TALLER CENTRAL\",\r\n    \"phone\": \"88888888\",\r\n    \"city\": \"San Pedro Sula\",\r\n    \"notes\": \"Actualizado desde PATCH\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{localhostAcoes}}/api/garages/:id",
+              "host": [
+                "{{localhostAcoes}}"
+              ],
+              "path": [
+                "api",
+                "garages",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "2"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "localhostAcoes",
+      "value": ""
+    }
+  ]
+}

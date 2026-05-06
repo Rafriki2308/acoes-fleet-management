@@ -1,10 +1,7 @@
 package com.acoes.fleetmanagement.vehicle.infraestructure;
 
 import com.acoes.fleetmanagement.vehicle.application.VehicleService;
-import com.acoes.fleetmanagement.vehicle.infraestructure.dto.CreateVehicleRequest;
-import com.acoes.fleetmanagement.vehicle.infraestructure.dto.PatchVehicleRequest;
-import com.acoes.fleetmanagement.vehicle.infraestructure.dto.UpdateVehicleRequest;
-import com.acoes.fleetmanagement.vehicle.infraestructure.dto.VehicleResponse;
+import com.acoes.fleetmanagement.vehicle.infraestructure.dto.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,6 +38,16 @@ public class VehicleController {
         return vehicleService.findById(id);
     }
 
+    @GetMapping(FIND_VEHICLE_BY_PLATE)
+    public VehicleResponse findByPlateNumber(@PathVariable String plateNumber) {
+        return vehicleService.findByPlateNumber(plateNumber);
+    }
+
+    @GetMapping(FIND_VEHICLE_BY_VIN)
+    public VehicleResponse findByVin(@PathVariable String vin) {
+        return vehicleService.findByVin(vin);
+    }
+
     @PutMapping(BY_ID)
     public VehicleResponse update(
             @PathVariable Long id,
@@ -55,6 +62,14 @@ public class VehicleController {
             @RequestBody PatchVehicleRequest request
     ) {
         return vehicleService.patch(id, request);
+    }
+
+    @PatchMapping(ASSIGN_GARAGE_ENDPOINT)
+    public VehicleResponse assignGarage(
+            @PathVariable Long id,
+            @Valid @RequestBody AssignGarageRequest request
+    ) {
+        return vehicleService.assignGarage(id, request);
     }
 
     @PatchMapping(DEACTIVATE_BY_ID)

@@ -12,5 +12,8 @@ public final class EndpointConstants {
 
     //Vehicle
     public final static String MAIN_VEHICLE_ENDPOINT = "/api/vehicles";
+    public final static String ASSIGN_GARAGE_ENDPOINT = "/{id}/assign-garage";
+    public final static String FIND_VEHICLE_BY_PLATE = "/plate/{plateNumber}";
+    public final static String FIND_VEHICLE_BY_VIN = "/vin/{vin}";
 
 }

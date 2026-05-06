@@ -19,4 +19,8 @@ public interface VehicleJpaRepository extends JpaRepository<VehicleJpaEntity, Lo
     List<VehicleJpaEntity> findByCurrentGarageId(Long garageId);
 
     List<VehicleJpaEntity> findByActiveTrue();
+
+    Optional<VehicleJpaEntity> findByPlateNumberAndActiveTrue(String plateNumber);
+
+    Optional<VehicleJpaEntity> findByVinAndActiveTrue(String vin);
 }

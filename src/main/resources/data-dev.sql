@@ -17,21 +17,20 @@
 -- Address está embebido → se expande en columnas address_*
 -- =========================================================
 
-INSERT INTO garages (
-    name,
-    address_street,
-    address_city,
-    address_province,
-    address_postal_code,
-    address_country,
-    contact_name,
-    phone,
-    email,
-    notes,
-    active
-) VALUES
+INSERT INTO garages (name,
+                     address_street,
+                     address_city,
+                     address_province,
+                     address_postal_code,
+                     address_country,
+                     contact_name,
+                     phone,
+                     email,
+                     notes,
+                     active)
+VALUES
 -- Taller interno principal
-( 'Taller Central ACOES',
+('Taller Central ACOES',
  'Calle Principal 123',
  'Madrid',
  'Madrid',
@@ -41,11 +40,10 @@ INSERT INTO garages (
  '600123456',
  'taller.central@acoes.org',
  'Taller interno principal de la ONG',
- true
-),
+ true),
 
 -- Taller externo colaborador
-( 'Taller Mecánica Rápida',
+('Taller Mecánica Rápida',
  'Avenida del Motor 45',
  'Madrid',
  'Madrid',
@@ -55,8 +53,7 @@ INSERT INTO garages (
  '600654321',
  'mecanica.rapida@example.com',
  'Taller externo para reparaciones rápidas',
- true
-);
+ true);
 
 
 -- =========================================================
@@ -70,72 +67,65 @@ INSERT INTO garages (
 -- - current_garage_id → NULL si el vehículo está circulando
 -- =========================================================
 
-INSERT INTO vehicles (
-    plate_number,
-    vin,
-    brand,
-    model,
-    color,
-    vehicle_type,
-    status,
-    current_mileage,
-    official_registration_date,
-    insurance_expiration_date,
-    current_garage_id,
-    notes,
-    active
-) VALUES
+INSERT INTO vehicles (plate_number,
+                      vin,
+                      brand,
+                      model,
+                      color,
+                      vehicle_type,
+                      status,
+                      current_mileage,
+                      official_registration_date,
+                      insurance_expiration_date,
+                      current_garage_id,
+                      notes,
+                      active)
+VALUES
 
 -- Vehículo operativo (circulando)
-(
-    '1234ABC',
-    '1HGCM82633A123456',
-    'Toyota',
-    'Corolla',
-    'Blanco',
-    'CAR',
-    'OPERATIONAL',
-    125000,
-    '2018-05-12',
-    '2027-05-12',
-    NULL,  -- No está en taller
-    'Vehículo en uso normal',
-    true
-),
+('PAB1234',
+ '1HGCM82633A123456',
+ 'Toyota',
+ 'Corolla',
+ 'Blanco',
+ 'CAR',
+ 'OPERATIONAL',
+ 125000,
+ '2018-05-12',
+ '2027-05-12',
+ NULL, -- No está en taller
+ 'Vehículo en uso normal',
+ true),
 
 -- Vehículo en reparación (en taller 1)
-(
-    '5678DEF',
-    'WVWZZZ1JZXW000001',
-    'Ford',
-    'Transit',
-    'Azul',
-    'VAN',
-    'IN_REPAIR',
-    210000,
-    '2016-09-20',
-    '2027-09-20',
-    1,  -- Taller Central ACOES
-    'En taller por revisión mecánica',
-    true
-),
+('TCD5678',
+ 'WVWZZZ1JZXW000001',
+ 'Ford',
+ 'Transit',
+ 'Azul',
+ 'VAN',
+ 'IN_REPAIR',
+ 210000,
+ '2016-09-20',
+ '2027-09-20',
+ 1, -- Taller Central ACOES
+ 'En taller por revisión mecánica',
+ true),
 
 -- Vehículo fuera de servicio
-(
- '9012GHI',
-    'JH4KA4650MC000002',
-    'Nissan',
-    'Navara',
-    'Gris',
-    'TRUCK',
-    'OUT_OF_SERVICE',
-    300000,
-    '2014-03-10',
-    '2026-03-10',
-    NULL,
-    'Pendiente de baja definitiva',
-    true
-);
+('MXY9012',
+ 'JH4KA4650MC000002',
+ 'Nissan',
+ 'Navara',
+ 'Gris',
+ 'TRUCK',
+ 'OUT_OF_SERVICE',
+ 300000,
+ '2014-03-10',
+ '2026-03-10',
+ NULL,
+ 'Pendiente de baja definitiva',
+ true);
 
 
 -- =========================================================
