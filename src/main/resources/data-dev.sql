@@ -4,6 +4,7 @@
 -- Este script inserta datos de prueba para:
 -- 1. Garages (talleres)
 -- 2. Vehicles (vehículos)
+-- 3. Workshop Orders (órdenes de taller)
 --
 -- Se ejecuta automáticamente al arrancar la aplicación
 -- en entorno DEV (H2)
@@ -125,6 +126,61 @@ VALUES
  '2026-03-10',
  NULL,
  'Pendiente de baja definitiva',
+ true);
+
+-- =========================================================
+-- 3. WORKSHOP ORDERS
+-- =========================================================
+-- IMPORTANTE:
+-- - order_number → único
+-- - vehicle_id → relación con vehicles.id
+-- - vehicle_plate_number → snapshot de la matrícula al abrir la orden
+-- - status → enum STRING (OPEN, PENDING_PARTS, CLOSED, CANCELLED)
+-- =========================================================
+
+INSERT INTO workshop_orders (order_number,
+                             vehicle_id,
+                             vehicle_plate_number,
+                             status,
+                             opening_date,
+                             closing_date,
+                             active)
+VALUES
+
+-- Orden abierta para vehículo operativo
+('WO-2026-000001',
+ 1,
+ 'PAB1234',
+ 'OPEN',
+ '2026-05-01',
+ NULL,
+ true),
+
+-- Orden pendiente de piezas para furgoneta
+('WO-2026-000002',
+ 2,
+ 'TCD5678',
+ 'PENDING_PARTS',
+ '2026-05-03',
+ NULL,
+ true),
+
+-- Orden cerrada para furgoneta
+('WO-2026-000003',
+ 2,
+ 'TCD5678',
+ 'CLOSED',
+ '2026-04-10',
+ '2026-04-12',
+ true),
+
+-- Orden cancelada para vehículo fuera de servicio
+('WO-2026-000004',
+ 3,
+ 'MXY9012',
+ 'CANCELLED',
+ '2026-03-15',
+ NULL,
  true);
 
 

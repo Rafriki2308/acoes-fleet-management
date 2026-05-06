@@ -433,6 +433,190 @@
           "response": []
         }
       ]
+    },
+    {
+      "name": "Workshop",
+      "item": [
+        {
+          "name": "Order",
+          "item": [
+            {
+              "name": "Add WorkshopOrder",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"vehicleId\": 1\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{localhostAcoes}}/api/workshop-orders",
+                  "host": [
+                    "{{localhostAcoes}}"
+                  ],
+                  "path": [
+                    "api",
+                    "workshop-orders"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get All WorkshopOrders Actives",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{localhostAcoes}}/api/workshop-orders",
+                  "host": [
+                    "{{localhostAcoes}}"
+                  ],
+                  "path": [
+                    "api",
+                    "workshop-orders"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get WorkshopOrder By Id",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{localhostAcoes}}/api/workshop-orders/:id",
+                  "host": [
+                    "{{localhostAcoes}}"
+                  ],
+                  "path": [
+                    "api",
+                    "workshop-orders",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get WorkshopOrder By Number",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{localhostAcoes}}/api/workshop-orders/number/:workshopOrderNumber",
+                  "host": [
+                    "{{localhostAcoes}}"
+                  ],
+                  "path": [
+                    "api",
+                    "workshop-orders",
+                    "number",
+                    ":workshopOrderNumber"
+                  ],
+                  "variable": [
+                    {
+                      "key": "workshopOrderNumber",
+                      "value": "WO-2026-000001"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get WorkshopOrder By NumberPlate",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{localhostAcoes}}/api/workshop-orders/vehicle-plate/:numberPlate",
+                  "host": [
+                    "{{localhostAcoes}}"
+                  ],
+                  "path": [
+                    "api",
+                    "workshop-orders",
+                    "vehicle-plate",
+                    ":numberPlate"
+                  ],
+                  "variable": [
+                    {
+                      "key": "numberPlate",
+                      "value": "pab 1234"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get WorkshopOrder By VIN",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{localhostAcoes}}/api/workshop-orders/vehicle-vin/:vin",
+                  "host": [
+                    "{{localhostAcoes}}"
+                  ],
+                  "path": [
+                    "api",
+                    "workshop-orders",
+                    "vehicle-vin",
+                    ":vin"
+                  ],
+                  "variable": [
+                    {
+                      "key": "vin",
+                      "value": "1HGCM82633A123456"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Deactivate Workshop Order",
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "url": {
+                  "raw": "{{localhostAcoes}}/api/workshop-orders/:id/deactivate",
+                  "host": [
+                    "{{localhostAcoes}}"
+                  ],
+                  "path": [
+                    "api",
+                    "workshop-orders",
+                    ":id",
+                    "deactivate"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
     }
   ],
   "event": [
