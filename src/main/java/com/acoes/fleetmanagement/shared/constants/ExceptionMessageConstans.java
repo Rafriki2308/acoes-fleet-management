@@ -15,4 +15,8 @@ public class ExceptionMessageConstans {
     //WORKSHOP_ORDER
     public static final String WORKSHOP_NOT_FOUND_BY_ID = "Workshop not found with id: ";
     public static final String WORKSHOP_NOT_FOUND_BY_NUMBER = "Workshop order not found with number: ";
+
+    //WORKSHOP_ORDER_LINE
+    public static final String WORKSHOP_ORDER_LINE_NUMBER_ALREADY_EXISTS = "Line number already exists " +
+            "for this workshop order";
 }

@@ -5,6 +5,7 @@
 -- 1. Garages (talleres)
 -- 2. Vehicles (vehículos)
 -- 3. Workshop Orders (órdenes de taller)
+-- 4. Workshop Order Lines (líneas de órdenes de taller)
 --
 -- Se ejecuta automáticamente al arrancar la aplicación
 -- en entorno DEV (H2)
@@ -181,6 +182,76 @@ VALUES
  'CANCELLED',
  '2026-03-15',
  NULL,
+ true);
+
+-- =========================================================
+-- 4. WORKSHOP ORDER LINES
+-- =========================================================
+-- IMPORTANTE:
+-- - workshop_order_id → relación con workshop_orders.id
+-- - line_number → número de línea dentro de cada orden
+-- - work_description → trabajo solicitado / motivo de entrada
+-- - priority → enum STRING (LOW, MEDIUM, HIGH, URGENT)
+-- - line_number es único dentro de cada orden
+-- =========================================================
+
+INSERT INTO workshop_order_lines (workshop_order_id,
+                                  line_number,
+                                  work_description,
+                                  priority,
+                                  active)
+VALUES
+
+-- Líneas para orden WO-2026-000001
+(1,
+ 1,
+ 'Mantenimiento programado',
+ 'MEDIUM',
+ true),
+
+(1,
+ 2,
+ 'Revisión general de niveles y filtros',
+ 'LOW',
+ true),
+
+-- Líneas para orden WO-2026-000002
+(2,
+ 1,
+ 'Ruido en motor durante aceleración',
+ 'HIGH',
+ true),
+
+(2,
+ 2,
+ 'Revisión de sistema de refrigeración',
+ 'MEDIUM',
+ true),
+
+-- Líneas para orden WO-2026-000003
+(3,
+ 1,
+ 'Cambio preventivo de aceite y filtro',
+ 'MEDIUM',
+ true),
+
+(3,
+ 2,
+ 'Revisión de frenos delanteros',
+ 'HIGH',
+ true),
+
+-- Líneas para orden WO-2026-000004
+(4,
+ 1,
+ 'Diagnóstico de avería grave en motor',
+ 'URGENT',
+ true),
+
+(4,
+ 2,
+ 'Evaluar viabilidad de reparación',
+ 'HIGH',
  true);
 
 

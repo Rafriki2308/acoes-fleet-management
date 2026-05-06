@@ -15,6 +15,7 @@ public class ValidationMessageConstants {
     public static final String EXPIRATION_INSURACE_FUTURE = "Insurance expiration date must be in the future";
     public static final String PLATE_NUMBER_NOT_VALID_MESSAGE = "Plate number must contain 6 or 7 alphanumeric " +
             "characters";
+    public static final String VEHICLE_ID_IS_REQUIRED_MESSAGE = "Vehicle id is required";
 
     //Garage Messages
     public static final String GARAGE_NAME_REQUIRED = "Garage name is required";
@@ -25,4 +26,13 @@ public class ValidationMessageConstants {
     public static final String PHONE_FORMAT_INVALID = "Phone must be a valid Honduras number";
     public static final String POSTAL_CODE_INVALID = "Postal code must have 5 digits";
 
+    //WORKSHOP
+    public static final String WORKSHOP_ID_REQUIRED = "Workshop order id is required";
+    public static final String WORKSHOP_ORDER_NUMBER_REQUIRED = "Workshop order number is required";
+
+
+    //WORKSHOP_ORDER_LINE
+    public static final String WORKSHOP_ORDER_LINE_MUST_POSITIVE = "Line number must be greater than zero";
+    public static final String WORKSHOP_ORDER_LINE_DESCRIPTION_REQUIRED = "Work description is required";
+    public static final String WORKSHOP_ORDER_LINE_PRIORITY_REQUIRED = "Priority is required";
 }
