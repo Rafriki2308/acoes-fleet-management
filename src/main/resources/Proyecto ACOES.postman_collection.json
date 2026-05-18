@@ -615,6 +615,217 @@
               "response": []
             }
           ]
+        },
+        {
+          "name": "Order_Lines",
+          "item": [
+            {
+              "name": "Add Workshop Line",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"workshopOrderNumber\": \"WO-2026-000001\",\r\n    \"lineNumber\": 3,\r\n    \"workDescription\": \"Cambio de aceite y filtros\",\r\n    \"priority\": \"HIGH\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{localhostAcoes}}/api/workshop-order-lines",
+                  "host": [
+                    "{{localhostAcoes}}"
+                  ],
+                  "path": [
+                    "api",
+                    "workshop-order-lines"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get All Lines By Workshop Id",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{localhostAcoes}}/api/workshop-order-lines/workshop-order/:id",
+                  "host": [
+                    "{{localhostAcoes}}"
+                  ],
+                  "path": [
+                    "api",
+                    "workshop-order-lines",
+                    "workshop-order",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get All Lines By Workshop Number",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{localhostAcoes}}/api/workshop-order-lines/workshop-order-number/:workshopNumber",
+                  "host": [
+                    "{{localhostAcoes}}"
+                  ],
+                  "path": [
+                    "api",
+                    "workshop-order-lines",
+                    "workshop-order-number",
+                    ":workshopNumber"
+                  ],
+                  "variable": [
+                    {
+                      "key": "workshopNumber",
+                      "value": "WO-2026-000001"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get OrderNumber Detail",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{localhostAcoes}}/api/workshop-orders/:orderNumber/detail",
+                  "host": [
+                    "{{localhostAcoes}}"
+                  ],
+                  "path": [
+                    "api",
+                    "workshop-orders",
+                    ":orderNumber",
+                    "detail"
+                  ],
+                  "variable": [
+                    {
+                      "key": "orderNumber",
+                      "value": "WO-2026-000001"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Deactivate Line",
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "url": {
+                  "raw": "{{localhostAcoes}}/api/workshop-order-lines/:id/deactivate",
+                  "host": [
+                    "{{localhostAcoes}}"
+                  ],
+                  "path": [
+                    "api",
+                    "workshop-order-lines",
+                    ":id",
+                    "deactivate"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Patch Line By Id",
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"workDescription\": \"Cambio de aceite, filtro de aceite y revisión visual\",\r\n    \"priority\": \"URGENT\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{localhostAcoes}}/api/workshop-order-lines/:id",
+                  "host": [
+                    "{{localhostAcoes}}"
+                  ],
+                  "path": [
+                    "api",
+                    "workshop-order-lines",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Patch Line By Order Number",
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"workDescription\": \"Revisión completa de frenos delanteros y traseros\",\r\n    \"priority\": \"HIGH\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{localhostAcoes}}/api/workshop-order-lines/order/:orderNumber/line/:lineNumber",
+                  "host": [
+                    "{{localhostAcoes}}"
+                  ],
+                  "path": [
+                    "api",
+                    "workshop-order-lines",
+                    "order",
+                    ":orderNumber",
+                    "line",
+                    ":lineNumber"
+                  ],
+                  "variable": [
+                    {
+                      "key": "orderNumber",
+                      "value": "WO-2026-000001"
+                    },
+                    {
+                      "key": "lineNumber",
+                      "value": "2"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
         }
       ]
     }

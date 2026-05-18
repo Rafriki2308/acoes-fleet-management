@@ -22,6 +22,7 @@ public final class EndpointConstants {
     public final static String FIND_WORKSHOP_ORDER_BY_VEHICLE_ID = "/vehicle/{vehicleId}";
     public final static String FIND_WORKSHOP_ORDER_BY_PLATE_NUMBER = "/vehicle-plate/{plateNumber}";
     public final static String FIND_WORKSHOP_ORDER_BY_VIN = "/vehicle-vin/{vin}";
+    public final static String FIND_WORKSHOP_ORDER_DETAIL_BY_ORDERNUMBER = "/{orderNumber}/detail";
 
     //WORKSHOP_ORDER_LINE
     public final static String MAIN_WORKSHOP_ORDER_LINE = "/api/workshop-order-lines";

@@ -1,6 +1,7 @@
 package com.acoes.fleetmanagement.workshop.order.application;
 
 import com.acoes.fleetmanagement.workshop.order.infraestructure.dto.CreateWorkshopOrderRequest;
+import com.acoes.fleetmanagement.workshop.order.infraestructure.dto.WorkshopOrderDetailResponse;
 import com.acoes.fleetmanagement.workshop.order.infraestructure.dto.WorkshopOrderResponse;
 
 import java.util.List;
@@ -20,6 +21,8 @@ public interface WorkshopOrderService {
     List<WorkshopOrderResponse> findByVehiclePlateNumber(String plateNumber);
 
     List<WorkshopOrderResponse> findByVehicleVin(String vin);
+
+    WorkshopOrderDetailResponse findOrderWithLinesByOrderNumber(String orderNumber);
 
     void deactivate(Long id);
 }

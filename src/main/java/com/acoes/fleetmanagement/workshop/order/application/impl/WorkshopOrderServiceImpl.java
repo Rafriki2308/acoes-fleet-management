@@ -5,10 +5,15 @@ import com.acoes.fleetmanagement.shared.validation.VehicleNormalizationUtils;
 import com.acoes.fleetmanagement.vehicle.domain.VehicleJpaEntity;
 import com.acoes.fleetmanagement.vehicle.domain.repository.VehicleJpaRepository;
 import com.acoes.fleetmanagement.workshop.order.application.WorkshopOrderService;
+import com.acoes.fleetmanagement.workshop.order.application.mapper.WorkshopOrderDetailMapper;
+import com.acoes.fleetmanagement.workshop.order.application.mapper.WorkshopOrderLineMapper;
 import com.acoes.fleetmanagement.workshop.order.application.mapper.WorkshopOrderMapper;
 import com.acoes.fleetmanagement.workshop.order.application.repository.WorkshopOrderJpaRepository;
+import com.acoes.fleetmanagement.workshop.order.application.repository.WorkshopOrderLineJpaRepository;
 import com.acoes.fleetmanagement.workshop.order.domain.WorkshopOrderJpaEntity;
 import com.acoes.fleetmanagement.workshop.order.infraestructure.dto.CreateWorkshopOrderRequest;
+import com.acoes.fleetmanagement.workshop.order.infraestructure.dto.WorkshopOrderDetailResponse;
+import com.acoes.fleetmanagement.workshop.order.infraestructure.dto.WorkshopOrderLineResponse;
 import com.acoes.fleetmanagement.workshop.order.infraestructure.dto.WorkshopOrderResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,10 +35,19 @@ public class WorkshopOrderServiceImpl implements WorkshopOrderService {
     private WorkshopOrderJpaRepository workshopOrderRepository;
 
     @Autowired
+    private WorkshopOrderLineJpaRepository workshopOrderLineRepository;
+
+    @Autowired
     private VehicleJpaRepository vehicleRepository;
 
     @Autowired
     private WorkshopOrderMapper workshopOrderMapper;
+
+    @Autowired
+    private WorkshopOrderLineMapper workshopOrderLineMapper;
+
+    @Autowired
+    private WorkshopOrderDetailMapper workshopOrderDetailMapper;
 
     @Override
     @Transactional
@@ -107,6 +121,25 @@ public class WorkshopOrderServiceImpl implements WorkshopOrderService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public WorkshopOrderDetailResponse findOrderWithLinesByOrderNumber(String orderNumber) {
+
+        WorkshopOrderJpaEntity order = workshopOrderRepository
+                .findByOrderNumberAndActiveTrue(orderNumber)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Workshop order not found with number: " + orderNumber
+                ));
+
+        List<WorkshopOrderLineResponse> lines = workshopOrderLineRepository
+                .findByWorkshopOrderIdAndActiveTrueOrderByLineNumberAsc(order.getId())
+                .stream()
+                .map(workshopOrderLineMapper::toResponse)
+                .toList();
+
+        return workshopOrderDetailMapper.toResponse(order, lines);
+    }
+
+    @Override
     @Transactional
     public void deactivate(Long id) {
         WorkshopOrderJpaEntity entity = findActiveOrderById(id);
@@ -126,6 +159,7 @@ public class WorkshopOrderServiceImpl implements WorkshopOrderService {
                 .filter(WorkshopOrderJpaEntity::isActive)
                 .orElseThrow(() -> new ResourceNotFoundException(WORKSHOP_NOT_FOUND_BY_ID + id));
     }
+
 
     private LocalDate resolveOpeningDate(LocalDate openingDate) {
         return openingDate != null ? openingDate : LocalDate.now();
