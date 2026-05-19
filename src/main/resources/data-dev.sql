@@ -149,38 +149,38 @@ INSERT INTO workshop_orders (order_number,
 VALUES
 
 -- Orden abierta para vehículo operativo
-('WO-2026-000001',
+('WO-2025-12-000001',
  1,
  'PAB1234',
  'OPEN',
- '2026-05-01',
+ '2025-12-01',
  NULL,
  true),
 
 -- Orden pendiente de piezas para furgoneta
-('WO-2026-000002',
+('WO-2025-12-000002',
  2,
  'TCD5678',
  'PENDING_PARTS',
- '2026-05-03',
+ '2025-12-03',
  NULL,
  true),
 
 -- Orden cerrada para furgoneta
-('WO-2026-000003',
+('WO-2025-12-000003',
  2,
  'TCD5678',
  'CLOSED',
- '2026-04-10',
- '2026-04-12',
+ '2025-12-10',
+ '2025-12-12',
  true),
 
 -- Orden cancelada para vehículo fuera de servicio
-('WO-2026-000004',
+('WO-2025-12-000004',
  3,
  'MXY9012',
  'CANCELLED',
- '2026-03-15',
+ '2025-12-15',
  NULL,
  true);
 

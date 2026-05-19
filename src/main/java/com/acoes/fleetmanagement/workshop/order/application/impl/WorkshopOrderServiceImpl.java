@@ -1,5 +1,7 @@
 package com.acoes.fleetmanagement.workshop.order.application.impl;
 
+import com.acoes.fleetmanagement.shared.businessnumber.domain.application.BusinessNumberGenerator;
+import com.acoes.fleetmanagement.shared.businessnumber.domain.model.BusinessSequenceKey;
 import com.acoes.fleetmanagement.shared.exception.ResourceNotFoundException;
 import com.acoes.fleetmanagement.shared.validation.VehicleNormalizationUtils;
 import com.acoes.fleetmanagement.vehicle.domain.VehicleJpaEntity;
@@ -41,6 +43,9 @@ public class WorkshopOrderServiceImpl implements WorkshopOrderService {
     private VehicleJpaRepository vehicleRepository;
 
     @Autowired
+    private BusinessNumberGenerator businessNumberGenerator;
+
+    @Autowired
     private WorkshopOrderMapper workshopOrderMapper;
 
     @Autowired
@@ -55,9 +60,8 @@ public class WorkshopOrderServiceImpl implements WorkshopOrderService {
         VehicleJpaEntity vehicle = findActiveVehicleById(request.vehicleId());
 
         WorkshopOrderJpaEntity entity = workshopOrderMapper.toEntity(request, vehicle);
-//        Ojo con generateOrderNumber(): para desarrollo vale, pero en producción lo mejor será una secuencia/tabla
-//        específica para evitar duplicados por concurrencia.
-        entity.setOrderNumber(generateOrderNumber());
+//        Generamos el numero de orden mediante secuencia/tabla específica para evitar duplicados por concurrencia.
+        entity.setOrderNumber(businessNumberGenerator.generate("WO", BusinessSequenceKey.WORKSHOP_ORDER));
 
         return workshopOrderMapper.toResponse(workshopOrderRepository.save(entity));
     }
