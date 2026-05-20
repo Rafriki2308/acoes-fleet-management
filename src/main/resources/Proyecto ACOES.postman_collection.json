@@ -828,6 +828,228 @@
               "response": []
             }
           ]
+        },
+        {
+          "name": "Execution",
+          "item": [
+            {
+              "name": "Add Execution By OrderNumber",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"startDate\": \"2026-05-20\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{localhostAcoes}}/api/workshop-executions/order/:orderNumber",
+                  "host": [
+                    "{{localhostAcoes}}"
+                  ],
+                  "path": [
+                    "api",
+                    "workshop-executions",
+                    "order",
+                    ":orderNumber"
+                  ],
+                  "variable": [
+                    {
+                      "key": "orderNumber",
+                      "value": "WO-2025-12-000001"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get All Executions",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{localhostAcoes}}/api/workshop-executions",
+                  "host": [
+                    "{{localhostAcoes}}"
+                  ],
+                  "path": [
+                    "api",
+                    "workshop-executions"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Execution By Execution Number",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{localhostAcoes}}/api/workshop-executions/:executionNumber",
+                  "host": [
+                    "{{localhostAcoes}}"
+                  ],
+                  "path": [
+                    "api",
+                    "workshop-executions",
+                    ":executionNumber"
+                  ],
+                  "variable": [
+                    {
+                      "key": "executionNumber",
+                      "value": "EX-2025-12-000002"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Execution By Order Number",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{localhostAcoes}}/api/workshop-executions/order/:orderNumber",
+                  "host": [
+                    "{{localhostAcoes}}"
+                  ],
+                  "path": [
+                    "api",
+                    "workshop-executions",
+                    "order",
+                    ":orderNumber"
+                  ],
+                  "variable": [
+                    {
+                      "key": "orderNumber",
+                      "value": "WO-2025-12-000001"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Execution By Plate",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{localhostAcoes}}/api/workshop-executions/vehicle-plate/:plateNumber",
+                  "host": [
+                    "{{localhostAcoes}}"
+                  ],
+                  "path": [
+                    "api",
+                    "workshop-executions",
+                    "vehicle-plate",
+                    ":plateNumber"
+                  ],
+                  "variable": [
+                    {
+                      "key": "plateNumber",
+                      "value": "PAB1234"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Execution By VIN",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{localhostAcoes}}/api/workshop-executions/vehicle-vin/:vin",
+                  "host": [
+                    "{{localhostAcoes}}"
+                  ],
+                  "path": [
+                    "api",
+                    "workshop-executions",
+                    "vehicle-vin",
+                    ":vin"
+                  ],
+                  "variable": [
+                    {
+                      "key": "vin",
+                      "value": "1HGCM82633A123456"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update Execution Status",
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"status\": \"PENDING\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{localhostAcoes}}/api/workshop-executions/:executionNumber/status",
+                  "host": [
+                    "{{localhostAcoes}}"
+                  ],
+                  "path": [
+                    "api",
+                    "workshop-executions",
+                    ":executionNumber",
+                    "status"
+                  ],
+                  "variable": [
+                    {
+                      "key": "executionNumber",
+                      "value": "EX-2025-12-000001"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Deactivate Execution By Number",
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "url": {
+                  "raw": "{{localhostAcoes}}/api/workshop-executions/:executionNumber/deactivate",
+                  "host": [
+                    "{{localhostAcoes}}"
+                  ],
+                  "path": [
+                    "api",
+                    "workshop-executions",
+                    ":executionNumber",
+                    "deactivate"
+                  ],
+                  "variable": [
+                    {
+                      "key": "executionNumber",
+                      "value": "EX-2025-12-000001"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
         }
       ]
     }

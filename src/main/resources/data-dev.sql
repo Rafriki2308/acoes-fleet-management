@@ -6,6 +6,7 @@
 -- 2. Vehicles (vehículos)
 -- 3. Workshop Orders (órdenes de taller)
 -- 4. Workshop Order Lines (líneas de órdenes de taller)
+-- 5. Workshop Executions (ejecuciones reales)
 --
 -- Se ejecuta automáticamente al arrancar la aplicación
 -- en entorno DEV (H2)
@@ -252,6 +253,63 @@ VALUES
  2,
  'Evaluar viabilidad de reparación',
  'HIGH',
+ true);
+
+-- =========================================================
+-- 5. WORKSHOP EXECUTIONS
+-- =========================================================
+-- IMPORTANTE:
+-- - execution_number → único
+-- - workshop_order_id → relación 1:1 con workshop_orders.id
+-- - workshop_order_number → snapshot del número de orden
+-- - status → enum STRING (OPEN, PENDING, CLOSED, CANCELLED)
+-- - start_date → fecha de inicio real de ejecución
+-- - end_date → fecha de cierre real, NULL si sigue abierta
+-- =========================================================
+
+INSERT INTO workshop_executions (execution_number,
+                                 workshop_order_id,
+                                 workshop_order_number,
+                                 status,
+                                 start_date,
+                                 end_date,
+                                 active)
+VALUES
+
+-- Ejecución abierta para orden WO-2025-12-000001
+('EX-2025-12-000001',
+ 1,
+ 'WO-2025-12-000001',
+ 'OPEN',
+ '2025-12-01',
+ NULL,
+ true),
+
+-- Ejecución pendiente para orden WO-2025-12-000002
+('EX-2025-12-000002',
+ 2,
+ 'WO-2025-12-000002',
+ 'PENDING',
+ '2025-12-03',
+ NULL,
+ true),
+
+-- Ejecución cerrada para orden WO-2025-12-000003
+('EX-2025-12-000003',
+ 3,
+ 'WO-2025-12-000003',
+ 'CLOSED',
+ '2025-12-10',
+ '2025-12-12',
+ true),
+
+-- Ejecución cancelada para orden WO-2025-12-000004
+('EX-2025-12-000004',
+ 4,
+ 'WO-2025-12-000004',
+ 'CANCELLED',
+ '2025-12-15',
+ NULL,
  true);
 
 

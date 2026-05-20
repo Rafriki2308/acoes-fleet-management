@@ -31,4 +31,13 @@ public final class EndpointConstants {
     public final static String FIND_LINES_BY_WORKSHOP_ORDER_NUMBER = "/workshop-order-number/{orderNumber}";
     public final static String PATCH_LINE_BY_WORKSHOP_ORDER_NUMBER = "/order/{orderNumber}/line/{lineNumber}";
 
+    //WORKSHOP_EXECUTION
+    public final static String MAIN_WORKSHOP_EXECUTION_ENDPOINT = "/api/workshop-executions";
+    public final static String CREATE_WORKSHOP_EXECUTION = "/order/{orderNumber}";
+    public final static String FIND_EXECUTION_BY_EXECUTION_NUMBER = "/{executionNumber}";
+    public final static String FIND_EXECUTION_BY_ORDER_NUMBER = "/order/{orderNumber}";
+    public final static String FIND_EXECUTION_BY_PLATE = "/vehicle-plate/{plateNumber}";
+    public final static String FIND_EXECUTION_BY_VIN = "/vehicle-vin/{vin}";
+    public final static String UPDATE_STATUS_EXECUTION_BY_NUMBER = "/{executionNumber}/status";
+    public final static String DEACTIVATE_EXECUTION_BY_NUMBER = "/{executionNumber}/deactivate";
 }

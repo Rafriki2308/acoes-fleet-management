@@ -23,4 +23,9 @@ public class ExceptionMessageConstans {
     public static final String WORKSHOP_ORDER_LINE_NOT_FOUND_BY_ORDER_NUMBER = "Workshop order line not " +
             "found for order number: ";
     public static final String LINE_NUMBER = " and line number: ";
+
+    //WORKSHOP_EXECUTION
+    public static final String EXECUTION_NOT_FOUND = "Workshop execution not found: ";
+    public static final String ORDER_NOT_FOUND = "Workshop order not found: ";
+    public static final String EXECUTION_ALREADY_EXISTS_FOR_ORDER = "Workshop execution already exists for order: ";
 }
