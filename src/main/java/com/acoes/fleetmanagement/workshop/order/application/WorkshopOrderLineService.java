@@ -8,7 +8,10 @@ import java.util.List;
 
 public interface WorkshopOrderLineService {
 
-    WorkshopOrderLineResponse create(CreateWorkshopOrderLineRequest request);
+    WorkshopOrderLineResponse create(
+            String orderNumber,
+            CreateWorkshopOrderLineRequest request
+    );
 
     List<WorkshopOrderLineResponse> findByWorkshopOrder(Long workshopOrderId);
 
@@ -21,6 +24,6 @@ public interface WorkshopOrderLineService {
             Integer lineNumber,
             PatchWorkshopOrderLineRequest request
     );
-    
+
     void deactivate(Long id);
 }

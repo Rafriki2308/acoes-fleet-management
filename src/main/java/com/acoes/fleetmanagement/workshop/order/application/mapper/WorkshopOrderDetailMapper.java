@@ -13,6 +13,7 @@ public interface WorkshopOrderDetailMapper {
 
     @Mapping(target = "vehicleId", source = "order.vehicle.id")
     @Mapping(target = "lines", source = "lines")
+    @Mapping(target = "id", ignore = true)
     WorkshopOrderDetailResponse toResponse(
             WorkshopOrderJpaEntity order,
             List<WorkshopOrderLineResponse> lines

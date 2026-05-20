@@ -31,6 +31,7 @@ public interface WorkshopOrderLineMapper {
             target = "workshopOrderNumber",
             source = "workshopOrder.orderNumber"
     )
+    @Mapping(target = "id", ignore = true)
     WorkshopOrderLineResponse toResponse(WorkshopOrderLineJpaEntity entity);
 
 }

@@ -1,9 +1,8 @@
 package com.acoes.fleetmanagement.workshop.order.infraestructure;
 
+import com.acoes.fleetmanagement.workshop.order.application.WorkshopOrderLineService;
 import com.acoes.fleetmanagement.workshop.order.application.WorkshopOrderService;
-import com.acoes.fleetmanagement.workshop.order.infraestructure.dto.CreateWorkshopOrderRequest;
-import com.acoes.fleetmanagement.workshop.order.infraestructure.dto.WorkshopOrderDetailResponse;
-import com.acoes.fleetmanagement.workshop.order.infraestructure.dto.WorkshopOrderResponse;
+import com.acoes.fleetmanagement.workshop.order.infraestructure.dto.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +21,22 @@ public class WorkshopOrderController {
     @Autowired
     private WorkshopOrderService workshopOrderService;
 
+    @Autowired
+    private WorkshopOrderLineService workshopOrderLineService;
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public WorkshopOrderResponse create(@Valid @RequestBody CreateWorkshopOrderRequest request) {
         return workshopOrderService.create(request);
+    }
+
+    @PostMapping(ADD_LINE_TO_ORDER_BY_NUMBER_ORDER)
+    @ResponseStatus(HttpStatus.CREATED)
+    public WorkshopOrderLineResponse createLine(
+            @PathVariable String orderNumber,
+            @Valid @RequestBody CreateWorkshopOrderLineRequest request
+    ) {
+        return workshopOrderLineService.create(orderNumber, request);
     }
 
     @GetMapping

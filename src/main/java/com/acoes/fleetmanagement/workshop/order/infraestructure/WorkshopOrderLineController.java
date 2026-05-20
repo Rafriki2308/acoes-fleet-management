@@ -1,7 +1,6 @@
 package com.acoes.fleetmanagement.workshop.order.infraestructure;
 
 import com.acoes.fleetmanagement.workshop.order.application.WorkshopOrderLineService;
-import com.acoes.fleetmanagement.workshop.order.infraestructure.dto.CreateWorkshopOrderLineRequest;
 import com.acoes.fleetmanagement.workshop.order.infraestructure.dto.PatchWorkshopOrderLineRequest;
 import com.acoes.fleetmanagement.workshop.order.infraestructure.dto.WorkshopOrderLineResponse;
 import jakarta.validation.Valid;
@@ -19,14 +18,6 @@ import static com.acoes.fleetmanagement.shared.constants.EndpointConstants.*;
 public class WorkshopOrderLineController {
 
     private final WorkshopOrderLineService workshopOrderLineService;
-
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public WorkshopOrderLineResponse create(
-            @Valid @RequestBody CreateWorkshopOrderLineRequest request
-    ) {
-        return workshopOrderLineService.create(request);
-    }
 
     @GetMapping(FIND_LINES_BY_WORKSHOP_ORDER_ID)
     public List<WorkshopOrderLineResponse> findByWorkshopOrder(

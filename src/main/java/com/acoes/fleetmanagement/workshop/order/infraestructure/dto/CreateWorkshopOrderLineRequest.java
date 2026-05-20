@@ -8,9 +8,7 @@ import jakarta.validation.constraints.Positive;
 import static com.acoes.fleetmanagement.shared.constants.ValidationMessageConstants.*;
 
 public record CreateWorkshopOrderLineRequest(
-
-        @NotBlank(message = WORKSHOP_ORDER_NUMBER_REQUIRED)
-        String workshopOrderNumber,
+        
 
         @Positive(message = WORKSHOP_ORDER_LINE_MUST_POSITIVE)
         Integer lineNumber,

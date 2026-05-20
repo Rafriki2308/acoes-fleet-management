@@ -36,10 +36,13 @@ public class WorkshopOrderLineServiceImpl implements WorkshopOrderLineService {
 
     @Override
     @Transactional
-    public WorkshopOrderLineResponse create(CreateWorkshopOrderLineRequest request) {
+    public WorkshopOrderLineResponse create(
+            String orderNumber,
+            CreateWorkshopOrderLineRequest request
+    ) {
 
         WorkshopOrderJpaEntity workshopOrder =
-                findActiveWorkshopOrderByNumber(request.workshopOrderNumber());
+                findActiveWorkshopOrderByNumber(orderNumber);
 
         validateLineNumberUniqueness(
                 workshopOrder.getId(),
