@@ -1,9 +1,13 @@
 package com.acoes.fleetmanagement.garage.domain;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
-import lombok.*;
+import jakarta.validation.constraints.NotBlank;
+import lombok.Getter;
+import lombok.Setter;
 
+/**
+ * Entidad JPA que representa un garaje o ubicacion donde puede estar un vehiculo.
+ */
 @Getter
 @Setter
 @Entity
@@ -24,7 +28,7 @@ public class GarageJpaEntity {
     private String name;
 
     @Embedded
-    //Anotation to override to avoid conficts
+    // Evita conflictos en comparaciones con relaciones bidireccionales.
     @AttributeOverrides({
             @AttributeOverride(name = "street", column = @Column(name = "address_street", length = 150)),
             @AttributeOverride(name = "city", column = @Column(name = "address_city", length = 80)),

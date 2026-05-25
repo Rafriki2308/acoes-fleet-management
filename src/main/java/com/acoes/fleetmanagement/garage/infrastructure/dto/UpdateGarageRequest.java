@@ -5,6 +5,9 @@ import jakarta.validation.constraints.*;
 import static com.acoes.fleetmanagement.shared.constants.ValidationConstants.HONDURAS_PHONE_REGEX;
 import static com.acoes.fleetmanagement.shared.constants.ValidationConstants.HONDURAS_POSTAL_CODE_REGEX;
 import static com.acoes.fleetmanagement.shared.constants.ValidationMessageConstants.*;
+/**
+ * DTO de entrada para reemplazar los datos principales de un garaje.
+ */
 
 public record UpdateGarageRequest(@NotBlank(message = GARAGE_NAME_REQUIRED)
                                   String name,

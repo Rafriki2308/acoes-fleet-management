@@ -1,4 +1,7 @@
 package com.acoes.fleetmanagement.garage.infrastructure.dto;
+/**
+ * DTO de salida con la informacion publica de un garaje.
+ */
 
 public record GarageResponse(Long id,
                              String name,

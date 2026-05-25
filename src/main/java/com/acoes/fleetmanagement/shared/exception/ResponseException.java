@@ -4,6 +4,9 @@ import lombok.Builder;
 
 import java.time.LocalDateTime;
 
+/**
+ * DTO de salida usado para devolver errores de API de forma uniforme.
+ */
 @Builder
 public record ResponseException(
         LocalDateTime timestamp,

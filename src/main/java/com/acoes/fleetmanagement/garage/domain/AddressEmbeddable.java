@@ -3,6 +3,9 @@ package com.acoes.fleetmanagement.garage.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
+/**
+ * Componente embebido que agrupa los campos de direccion de un garaje.
+ */
 @Getter
 @Setter
 @Embeddable

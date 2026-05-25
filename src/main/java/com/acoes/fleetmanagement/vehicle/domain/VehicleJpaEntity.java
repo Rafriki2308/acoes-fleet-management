@@ -13,6 +13,9 @@ import java.time.LocalDate;
 import static com.acoes.fleetmanagement.shared.constants.ValidationMessageConstants.VIN_NOT_VALID_MESSAGE;
 import static com.acoes.fleetmanagement.shared.constants.ValidationConstants.*;
 
+/**
+ * Entidad JPA que representa un vehiculo gestionado por la flota.
+ */
 @Getter
 @Setter
 @Entity

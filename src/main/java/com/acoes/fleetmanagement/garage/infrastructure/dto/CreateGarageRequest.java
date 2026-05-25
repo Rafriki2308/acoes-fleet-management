@@ -8,6 +8,9 @@ import jakarta.validation.constraints.Size;
 import static com.acoes.fleetmanagement.shared.constants.ValidationConstants.HONDURAS_PHONE_REGEX;
 import static com.acoes.fleetmanagement.shared.constants.ValidationConstants.HONDURAS_POSTAL_CODE_REGEX;
 import static com.acoes.fleetmanagement.shared.constants.ValidationMessageConstants.*;
+/**
+ * DTO de entrada para crear un garaje.
+ */
 
 public record CreateGarageRequest(@NotBlank(message = GARAGE_NAME_REQUIRED)
                                   String name,

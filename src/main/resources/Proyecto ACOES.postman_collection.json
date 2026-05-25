@@ -1050,6 +1050,144 @@
               "response": []
             }
           ]
+        },
+        {
+          "name": "Execution_Lines",
+          "item": [
+            {
+              "name": "Add Line By OrderNumber",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"lineNumber\": 1,\r\n    \"description\": \"Cambio de aceite y filtros\",\r\n    \"type\": \"LABOR\",\r\n    \"quantity\": 2.5,\r\n    \"status\": \"PENDING\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{localhostAcoes}}/api/executions/:executionNumber/lines",
+                  "host": [
+                    "{{localhostAcoes}}"
+                  ],
+                  "path": [
+                    "api",
+                    "executions",
+                    ":executionNumber",
+                    "lines"
+                  ],
+                  "variable": [
+                    {
+                      "key": "executionNumber",
+                      "value": "EX-2025-12-000001"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get All Lines",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{localhostAcoes}}/api/executions/:executionNumber/lines",
+                  "host": [
+                    "{{localhostAcoes}}"
+                  ],
+                  "path": [
+                    "api",
+                    "executions",
+                    ":executionNumber",
+                    "lines"
+                  ],
+                  "variable": [
+                    {
+                      "key": "executionNumber",
+                      "value": "EX-2025-12-000001"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update Line",
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"description\": \"Cambio completo de aceite y filtros\",\r\n    \"quantity\": 3,\r\n    \"status\": \"COMPLETED\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{localhostAcoes}}/api/executions/:executionNumber/lines/:lineNumber",
+                  "host": [
+                    "{{localhostAcoes}}"
+                  ],
+                  "path": [
+                    "api",
+                    "executions",
+                    ":executionNumber",
+                    "lines",
+                    ":lineNumber"
+                  ],
+                  "variable": [
+                    {
+                      "key": "executionNumber",
+                      "value": "EX-2025-12-000001"
+                    },
+                    {
+                      "key": "lineNumber",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Deactivate Line By ExecutionNumber and LineNumber",
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "url": {
+                  "raw": "{{localhostAcoes}}/api/executions/:executionNumber/lines/:lineNumber/deactivate",
+                  "host": [
+                    "{{localhostAcoes}}"
+                  ],
+                  "path": [
+                    "api",
+                    "executions",
+                    ":executionNumber",
+                    "lines",
+                    ":lineNumber",
+                    "deactivate"
+                  ],
+                  "variable": [
+                    {
+                      "key": "executionNumber",
+                      "value": "EX-2025-12-000001"
+                    },
+                    {
+                      "key": "lineNumber",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
         }
       ]
     }

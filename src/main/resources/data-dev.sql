@@ -7,6 +7,7 @@
 -- 3. Workshop Orders (órdenes de taller)
 -- 4. Workshop Order Lines (líneas de órdenes de taller)
 -- 5. Workshop Executions (ejecuciones reales)
+-- 6. Execution Lines (líneas reales de ejecución)
 --
 -- Se ejecuta automáticamente al arrancar la aplicación
 -- en entorno DEV (H2)
@@ -310,6 +311,110 @@ VALUES
  'CANCELLED',
  '2025-12-15',
  NULL,
+ true);
+
+Añade este bloque después de WORKSHOP EXECUTIONS y antes del FIN DEL SCRIPT.
+
+-- =========================================================
+-- 6. EXECUTION LINES
+-- =========================================================
+-- IMPORTANTE:
+-- - execution_id → relación con executions.id
+-- - line_number → único dentro de una ejecución
+-- - type → enum STRING (LABOR, PART, EXTERNAL_SERVICE)
+-- - status → enum STRING (PENDING, COMPLETED)
+-- =========================================================
+
+INSERT INTO execution_lines (execution_id,
+                             line_number,
+                             description,
+                             type,
+                             quantity,
+                             status,
+                             active)
+VALUES
+
+-- =====================================================
+-- Líneas para EX-2025-12-000001
+-- =====================================================
+
+-- Mano de obra
+(1,
+ 1,
+ 'Cambio de aceite y filtros',
+ 'LABOR',
+ 2.50,
+ 'COMPLETED',
+ true),
+
+-- Recambio
+(1,
+ 2,
+ 'Filtro de aceite Toyota Corolla',
+ 'PART',
+ 1.00,
+ 'COMPLETED',
+ true),
+
+-- Trabajo externo
+(1,
+ 3,
+ 'Rectificado de discos delanteros',
+ 'EXTERNAL_SERVICE',
+ 1.00,
+ 'PENDING',
+ true),
+
+-- =====================================================
+-- Líneas para EX-2025-12-000002
+-- =====================================================
+
+(2,
+ 1,
+ 'Diagnóstico de fallo eléctrico',
+ 'LABOR',
+ 1.50,
+ 'PENDING',
+ true),
+
+(2,
+ 2,
+ 'Batería Ford Transit 12V',
+ 'PART',
+ 1.00,
+ 'PENDING',
+ true),
+
+-- =====================================================
+-- Líneas para EX-2025-12-000003
+-- =====================================================
+
+(3,
+ 1,
+ 'Cambio de neumáticos traseros',
+ 'LABOR',
+ 2.00,
+ 'COMPLETED',
+ true),
+
+(3,
+ 2,
+ 'Neumático 215/65R16',
+ 'PART',
+ 2.00,
+ 'COMPLETED',
+ true),
+
+-- =====================================================
+-- Líneas para EX-2025-12-000004
+-- =====================================================
+
+(4,
+ 1,
+ 'Inspección inicial de vehículo siniestrado',
+ 'LABOR',
+ 1.00,
+ 'COMPLETED',
  true);
 
 

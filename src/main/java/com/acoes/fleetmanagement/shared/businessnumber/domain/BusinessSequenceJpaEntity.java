@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Entidad JPA que almacena el ultimo valor usado por una secuencia de negocio.
+ */
 @Getter
 @Setter
 @Entity

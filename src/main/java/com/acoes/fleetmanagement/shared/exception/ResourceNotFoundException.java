@@ -1,4 +1,7 @@
 package com.acoes.fleetmanagement.shared.exception;
+/**
+ * Excepcion de dominio lanzada cuando no se encuentra un recurso solicitado.
+ */
 
 public class ResourceNotFoundException extends RuntimeException {
 

@@ -9,12 +9,22 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 
+/**
+ * Genera numeros funcionales usando secuencias persistidas y bloqueadas.
+ */
 @Service
 @RequiredArgsConstructor
 public class BusinessNumberGenerator {
 
     private final BusinessSequenceJpaRepository repository;
 
+    /**
+     * Genera el siguiente numero funcional para una secuencia de negocio.
+     *
+     * @param prefix prefijo textual del numero generado.
+     * @param sequenceKey clave funcional de la secuencia.
+     * @return numero funcional generado.
+     */
     @Transactional
     public String generate(String prefix, BusinessSequenceKey sequenceKey) {
         LocalDate today = LocalDate.now();
