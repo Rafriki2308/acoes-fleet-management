@@ -313,8 +313,6 @@ VALUES
  NULL,
  true);
 
-Añade este bloque después de WORKSHOP EXECUTIONS y antes del FIN DEL SCRIPT.
-
 -- =========================================================
 -- 6. EXECUTION LINES
 -- =========================================================
